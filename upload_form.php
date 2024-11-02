@@ -55,9 +55,9 @@
             if($_GET['status'] == 01)
                 echo "<span id = 'tb' style = 'display:none'> Lỗi không tải được file lên</span>"; 
             if($_GET['status'] == 02)
-                echo "<span id = 'tb' style = 'display:none'>Lỗi định dạng file ! Hãy lựa chọn file có định dạng JPG, PNG, GIF/span>"; 
+                echo "<span id = 'tb' style = 'display:none'>Lỗi định dạng file ! Hãy lựa chọn file có định dạng JPG, PNG, GIF </span>"; 
             if($_GET['status'] == 03)
-                echo "<span id = 'tb' style = 'display:none'>Kích cỡ file tải lên có dung lượng <= 2MB </span>"; 
+                echo "<span id = 'tb' style = 'display:none'>Kích cỡ file tải lên có dung lượng nhỏ hơn hoặc bằng 2MB </span>"; 
 
         }
     ?>

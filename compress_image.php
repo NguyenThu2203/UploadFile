@@ -1,17 +1,40 @@
 <?php
-function compress_image($file, $quality) {
-    $info = getimagesize($file['tmp_name']);
+// Hàm nén ảnh sử dụng GD Library với dung lượng 75%
+function compressImage($source, $quality = 75) {
+    // Lấy thông tin ảnh để xác định loại file
+    $info = getimagesize($source);
+    $mime = $info['mime'];
     
-    if ($info['mime'] == 'image/jpeg') {
-        $image = imagecreatefromjpeg($file['tmp_name']);
-        imagejpeg($image, $file['tmp_name'], $quality);
-    } elseif ($info['mime'] == 'image/png') {
-        $image = imagecreatefrompng($file['tmp_name']);
-        imagepng($image, $file['tmp_name'], round($quality / 10));
+    // Tạo tên file nén
+    $arr_name = explode('.', $source);
+    $file_ext = strtolower(end($arr_name));
+    $base_name = pathinfo($source, PATHINFO_FILENAME);
+    $final_destination = "img/" . $base_name . "_compressed." . $file_ext;
+
+    // Tạo ảnh từ file nguồn và thực hiện nén
+    if ($mime == 'image/jpeg') {
+        $image = imagecreatefromjpeg($source);
+        imagejpeg($image, $final_destination, $quality);
+    } elseif ($mime == 'image/png') {
+        $image = imagecreatefrompng($source);
+    // Chuyển đổi chất lượng từ 0-100 sang 0-9 cho PNG
+        $pngQuality = 9 - round($quality / 10);
+        imagepng($image, $final_destination, $pngQuality);
+    } elseif ($mime == 'image/gif') {
+        $image = imagecreatefromgif($source);
+        imagegif($image, $final_destination);
+    } else {
+        return false; // Không hỗ trợ định dạng
     }
-    
+
+    // Giải phóng bộ nhớ sau khi xử lý
     imagedestroy($image);
+    return $final_destination; // Trả về đường dẫn file nén
 }
 
-compress_image($file, 75); // Nén với chất lượng 75%
+// Tự động nén ảnh ngay khi được lưu
+if (isset($_GET['compress_image']) && isset($_GET['path'])) {
+    $path = $_GET['path'];
+    compressImage($path);
+}
 ?>
