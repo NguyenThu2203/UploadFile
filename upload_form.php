@@ -48,8 +48,6 @@
     <?php
         // Lấy giá trị của tham số status từ URL
         if(isset($_GET['status'])){
-            if($_GET['status'] == 04)
-                echo "<span id = 'tb' style = 'display:none'>Chưa lựa chọn file nào! </span>"; 
             if($_GET['status'] == 1)
                 echo "<span id = 'tb' style = 'display:none'> Upload File thành công </span>"; 
             if($_GET['status'] == 01)
@@ -58,14 +56,15 @@
                 echo "<span id = 'tb' style = 'display:none'>Lỗi định dạng file ! Hãy lựa chọn file có định dạng JPG, PNG, GIF </span>"; 
             if($_GET['status'] == 03)
                 echo "<span id = 'tb' style = 'display:none'>Kích cỡ file tải lên có dung lượng nhỏ hơn hoặc bằng 2MB </span>"; 
-
+            if($_GET['status'] == 04)
+                echo "<span id = 'tb' style = 'display:none'>Chưa lựa chọn file nào! </span>"; 
         }
     ?>
 
     <div class="upload-form">
         <h2>Upload File</h2>
         <form id="uploadForm" action="process_upload.php" method="post" enctype="multipart/form-data">
-            <input type="file" name ="uploaded_image">
+            <input type="file" name ="uploaded_image" accept="image/jpeg, image/png, image/gif">
             <button type="submit">Tải lên</button>
             <div id="errorMsg" class="error"></div>
         </form>
@@ -75,7 +74,7 @@
     <script>
         alert(document.getElementById('tb').innerHTML); 
     </script>
-
+</div>
 
 <!-- <div class="upload-form">
     <h2>Upload File</h2>
