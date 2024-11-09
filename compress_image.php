@@ -1,6 +1,6 @@
 <?php
 // Hàm nén ảnh sử dụng GD Library với dung lượng 75%
-function compressImage($source, $quality = 70) { // Giảm chất lượng xuống 75%
+function compressImage($source, $quality = 75) { // Giảm chất lượng xuống 75%
     // Lấy thông tin ảnh để xác định loại file
     $info = getimagesize($source);
     $mime = $info['mime'];
